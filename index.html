@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultrasonic Signal Classifier - Project Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        
+        .github-link {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px 5px;
+            font-weight: bold;
+        }
+        
+        .github-link:hover {
+            background: #555;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .stat {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 3px;
+        }
+        
+        .stat-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stat-value {
+            color: #667eea;
+            font-size: 1.2em;
+        }
+        
+        .metric-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .metric-box .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .metric-box .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f0f4ff;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        .grid-2col {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        @media (max-width: 768px) {
+            .grid, .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🔊 Ultrasonic Signal Classifier</h1>
+            <p class="subtitle">Machine Learning Project for Defect Detection in Ultrasonic A-Scan Signals</p>
+            <a href="https://github.com/muhammad-umar-f/Ultrasonic-Signal-Classifier" class="github-link">🔗 View on GitHub</a>
+            <a href="https://github.com/muhammad-umar-f/Ultrasonic-Signal-Classifier/blob/master/README.md" class="github-link">📖 Read Documentation</a>
+        </header>
+
+        <!-- Overview -->
+        <div class="grid grid-2col">
+            <div class="card">
+                <h2>📊 Project Overview</h2>
+                <p style="margin-bottom: 15px;">A complete machine learning pipeline for classifying ultrasonic A-scan signals using:</p>
+                <ul class="feature-list">
+                    <li>1D Convolutional Neural Networks (PyTorch)</li>
+                    <li>Synthetic signal generation with realistic defects</li>
+                    <li>Hyperparameter tuning with Optuna</li>
+                    <li>Experiment tracking with MLflow</li>
+                    <li>Comprehensive evaluation metrics</li>
+                    <li>Interactive Jupyter notebook demo</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>📁 Project Structure</h2>
+                <div class="code-block">
+├── src/
+│   ├── signal_generator.py
+│   └── model.py
+├── notebooks/
+│   └── demo.ipynb
+├── train.py
+├── evaluate.py
+├── hyperparameter_tuning.py
+├── config.yaml
+├── requirements.txt
+└── README.md
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Results -->
+        <div class="grid">
+            <div class="card">
+                <h2>🚀 Latest Demo Results</h2>
+                <div class="metric-box">
+                    <div class="label">Signals Generated</div>
+                    <div class="value">1,000</div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Samples</th>
+                        <th>Split</th>
+                    </tr>
+                    <tr>
+                        <td>No-Defect</td>
+                        <td>500</td>
+                        <td>50%</td>
+                    </tr>
+                    <tr>
+                        <td>Defect</td>
+                        <td>500</td>
+                        <td>50%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Classification Performance</h2>
+                <div class="metric-box">
+                    <div class="label">Test Accuracy</div>
+                    <div class="value">98.00%</div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>No-Defect</th>
+                        <th>Defect</th>
+                    </tr>
+                    <tr>
+                        <td>Precision</td>
+                        <td>97.06%</td>
+                        <td>98.98%</td>
+                    </tr>
+                    <tr>
+                        <td>Recall</td>
+                        <td>99.00%</td>
+                        <td>97.00%</td>
+                    </tr>
+                    <tr>
+                        <td>F1-Score</td>
+                        <td>98.02%</td>
+                        <td>97.98%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Signal Statistics -->
+        <div class="grid grid-2col">
+            <div class="card">
+                <h2>📈 No-Defect Signal Statistics</h2>
+                <div class="stat">
+                    <span class="stat-label">Mean Amplitude:</span>
+                    <span class="stat-value">0.0609</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Std Amplitude:</span>
+                    <span class="stat-value">0.1132</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Max Amplitude:</span>
+                    <span class="stat-value">1.1305</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Energy (RMS):</span>
+                    <span class="stat-value">0.1286</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚠️ Defect Signal Statistics</h2>
+                <div class="stat">
+                    <span class="stat-label">Mean Amplitude:</span>
+                    <span class="stat-value">0.0670</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Std Amplitude:</span>
+                    <span class="stat-value">0.1216</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Max Amplitude:</span>
+                    <span class="stat-value">1.1458</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Energy (RMS):</span>
+                    <span class="stat-value">0.1388</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confusion Matrix -->
+        <div class="card">
+            <h2>🔄 Confusion Matrix</h2>
+            <div id="confusionChart" class="chart-container"></div>
+        </div>
+
+        <!-- Model Architecture -->
+        <div class="grid grid-2col">
+            <div class="card">
+                <h2>🧠 Model Architecture</h2>
+                <div class="stat">
+                    <span class="stat-label">Model Type:</span>
+                    <span class="stat-value">1D CNN</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Input Length:</span>
+                    <span class="stat-value">256</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Initial Filters:</span>
+                    <span class="stat-value">32</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Kernel Size:</span>
+                    <span class="stat-value">5</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Network Depth:</span>
+                    <span class="stat-value">3 blocks</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Dropout Rate:</span>
+                    <span class="stat-value">0.5</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚙️ Training Configuration</h2>
+                <div class="stat">
+                    <span class="stat-label">Epochs:</span>
+                    <span class="stat-value">50</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Batch Size:</span>
+                    <span class="stat-value">32</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Learning Rate:</span>
+                    <span class="stat-value">0.001</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Optimizer:</span>
+                    <span class="stat-value">Adam</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Loss Function:</span>
+                    <span class="stat-value">CrossEntropyLoss</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Early Stopping:</span>
+                    <span class="stat-value">10 epochs patience</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="card">
+            <h2>🚀 Quick Start Guide</h2>
+            
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">1. Installation</h3>
+            <div class="code-block">
+pip install -r requirements.txt
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">2. Run the Demo</h3>
+            <div class="code-block">
+python run_demo.py
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">3. Train the Model</h3>
+            <div class="code-block">
+python train.py --config config.yaml --model-dir models
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">4. Evaluate Performance</h3>
+            <div class="code-block">
+python evaluate.py --model models/best_model.pt --config config.yaml
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">5. Hyperparameter Tuning</h3>
+            <div class="code-block">
+python hyperparameter_tuning.py --config config.yaml --n-trials 50
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">6. View MLflow Results</h3>
+            <div class="code-block">
+mlflow ui --backend-store-uri file:./logs/mlflow
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">7. Interactive Notebook</h3>
+            <div class="code-block">
+jupyter notebook notebooks/demo.ipynb
+            </div>
+        </div>
+
+        <!-- Hyperparameter Tuning -->
+        <div class="grid grid-2col">
+            <div class="card">
+                <h2>🔍 Hyperparameter Search Space</h2>
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Range</th>
+                    </tr>
+                    <tr>
+                        <td>Learning Rate</td>
+                        <td>[1e-5, 1e-2]</td>
+                    </tr>
+                    <tr>
+                        <td>Num Filters</td>
+                        <td>[16, 128]</td>
+                    </tr>
+                    <tr>
+                        <td>Kernel Size</td>
+                        <td>[3, 11]</td>
+                    </tr>
+                    <tr>
+                        <td>Network Depth</td>
+                        <td>[2, 5]</td>
+                    </tr>
+                    <tr>
+                        <td>Dropout Rate</td>
+                        <td>[0.1, 0.6]</td>
+                    </tr>
+                    <tr>
+                        <td>Batch Size</td>
+                        <td>[16, 64]</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>📦 Key Dependencies</h2>
+                <ul class="feature-list">
+                    <li>PyTorch 2.0+</li>
+                    <li>NumPy 1.24+</li>
+                    <li>Scikit-learn 1.3+</li>
+                    <li>Pandas 2.0+</li>
+                    <li>Optuna 3.0+</li>
+                    <li>MLflow 2.0+</li>
+                    <li>Matplotlib 3.7+</li>
+                    <li>Jupyter</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="card">
+            <h2>✨ Key Features</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">🎯 Classification</h3>
+                    <ul class="feature-list" style="margin: 0;">
+                        <li>Binary classification (Defect/No-Defect)</li>
+                        <li>Real-time predictions</li>
+                        <li>Probability outputs</li>
+                        <li>Batch processing support</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">🔬 Signal Processing</h3>
+                    <ul class="feature-list" style="margin: 0;">
+                        <li>Synthetic A-scan generation</li>
+                        <li>Realistic defect simulation</li>
+                        <li>Configurable noise levels</li>
+                        <li>Feature extraction</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">📊 Experiment Tracking</h3>
+                    <ul class="feature-list" style="margin: 0;">
+                        <li>MLflow integration</li>
+                        <li>Metrics logging</li>
+                        <li>Model versioning</li>
+                        <li>Artifact storage</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #667eea; margin-bottom: 10px;">⚡ Optimization</h3>
+                    <ul class="feature-list" style="margin: 0;">
+                        <li>Optuna hyperparameter tuning</li>
+                        <li>Pruning for efficiency</li>
+                        <li>Early stopping</li>
+                        <li>Learning rate scheduling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Charts -->
+        <div class="grid grid-2col">
+            <div class="card">
+                <h2>📊 Class Distribution</h2>
+                <div id="classChart" class="chart-container"></div>
+            </div>
+
+            <div class="card">
+                <h2>📈 Amplitude Comparison</h2>
+                <div id="amplitudeChart" class="chart-container"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>🎓 Ultrasonic Signal Classifier | ML Project | GitHub: <strong>muhammad-umar-f</strong></p>
+            <p style="margin-top: 10px; opacity: 0.8;">Built with PyTorch, Optuna, MLflow | Made with ❤️ for Signal Processing</p>
+        </footer>
+    </div>
+
+    <script>
+        // Confusion Matrix Chart
+        const cmData = [{
+            z: [[99, 1], [3, 97]],
+            x: ['Predicted No-Defect', 'Predicted Defect'],
+            y: ['True No-Defect', 'True Defect'],
+            type: 'heatmap',
+            colorscale: 'Blues',
+            text: [[99, 1], [3, 97]],
+            texttemplate: '%{text}',
+            textfont: { size: 14, color: 'white' },
+            showscale: true
+        }];
+
+        const cmLayout = {
+            title: 'Confusion Matrix - Test Set (200 samples)',
+            xaxis: { side: 'bottom' },
+            yaxis: { autorange: 'reversed' },
+            height: 400
+        };
+
+        Plotly.newPlot('confusionChart', cmData, cmLayout, {responsive: true});
+
+        // Class Distribution Chart
+        const classData = [{
+            values: [500, 500],
+            labels: ['No-Defect', 'Defect'],
+            type: 'pie',
+            marker: { colors: ['#667eea', '#764ba2'] }
+        }];
+
+        const classLayout = {
+            title: 'Class Distribution (1000 total samples)',
+            height: 400
+        };
+
+        Plotly.newPlot('classChart', classData, classLayout, {responsive: true});
+
+        // Amplitude Comparison Chart
+        const ampData = [
+            {
+                y: [0.0609, 0.1132, 1.1305, 0.1286],
+                name: 'No-Defect',
+                type: 'bar',
+                marker: { color: '#667eea' }
+            },
+            {
+                y: [0.0670, 0.1216, 1.1458, 0.1388],
+                name: 'Defect',
+                type: 'bar',
+                marker: { color: '#764ba2' }
+            }
+        ];
+
+        const ampLayout = {
+            title: 'Signal Statistics Comparison',
+            xaxis: { ticktext: ['Mean Amplitude', 'Std Amplitude', 'Max Amplitude', 'Energy (RMS)'], tickvals: [0, 1, 2, 3] },
+            yaxis: { title: 'Value' },
+            barmode: 'group',
+            height: 400
+        };
+
+        Plotly.newPlot('amplitudeChart', ampData, ampLayout, {responsive: true});
+    </script>
+</body>
+</html>
