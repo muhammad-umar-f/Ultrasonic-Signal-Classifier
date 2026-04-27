@@ -1,0 +1,32 @@
+# Configuration file for Ultrasonic Signal Classifier
+
+# Data generation parameters
+signal_length: 256
+noise_std: 0.05
+defect_amplitude: 0.5
+
+# Dataset parameters
+n_defect_samples: 500
+n_no_defect_samples: 500
+test_split: 0.2
+val_split: 0.2
+random_seed: 42
+
+# Model parameters
+num_filters: 32
+kernel_size: 5
+depth: 3
+dropout_rate: 0.5
+
+# Training parameters
+epochs: 50
+batch_size: 32
+learning_rate: 0.001
+early_stopping_patience: 10
+
+# Hyperparameter tuning parameters
+tuning_epochs: 20
+
+# MLflow parameters
+mlflow_experiment_name: ultrasonic-classifier
+mlflow_tracking_uri: file:./logs/mlflow
